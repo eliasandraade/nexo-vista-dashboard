@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Pencil, Eye } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 import {
@@ -53,14 +53,9 @@ export function ProductTable({ products }: ProductTableProps) {
               {format(new Date(p.updatedAt), "dd/MM/yyyy HH:mm")}
             </TableCell>
             <TableCell className="text-right">
-              <div className="flex items-center justify-end gap-1">
-                <Button variant="ghost" size="icon" onClick={() => navigate(`/produtos/${p.id}`)}>
-                  <Eye className="h-4 w-4" />
-                </Button>
-                <Button variant="ghost" size="icon" onClick={() => navigate(`/produtos/${p.id}`)}>
-                  <Pencil className="h-4 w-4" />
-                </Button>
-              </div>
+              <Button variant="ghost" size="icon" onClick={() => navigate(`/produtos/${p.id}`)}>
+                <Pencil className="h-4 w-4" />
+              </Button>
             </TableCell>
           </TableRow>
         ))}
