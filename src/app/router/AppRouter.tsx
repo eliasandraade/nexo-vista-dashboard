@@ -6,6 +6,7 @@ import DashboardPage from "@/modules/dashboard/pages/DashboardPage";
 import PdvPage from "@/modules/sales/pages/PdvPage";
 import OrcamentosPage from "@/modules/sales/pages/OrcamentosPage";
 import ProdutosPage from "@/modules/products/pages/ProdutosPage";
+import ProductFormPage from "@/modules/products/pages/ProductFormPage";
 import EstoquePage from "@/modules/inventory/pages/EstoquePage";
 import ClientesPage from "@/modules/customers/pages/ClientesPage";
 import FornecedoresPage from "@/modules/suppliers/pages/FornecedoresPage";
@@ -22,15 +23,15 @@ export function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Redirect root to dashboard */}
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
-        {/* Main app routes inside layout */}
         <Route element={<MainAppLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/pdv" element={<PdvPage />} />
           <Route path="/orcamentos" element={<OrcamentosPage />} />
           <Route path="/produtos" element={<ProdutosPage />} />
+          <Route path="/produtos/novo" element={<ProductFormPage />} />
+          <Route path="/produtos/:id" element={<ProductFormPage />} />
           <Route path="/estoque" element={<EstoquePage />} />
           <Route path="/clientes" element={<ClientesPage />} />
           <Route path="/fornecedores" element={<FornecedoresPage />} />
@@ -43,7 +44,6 @@ export function AppRouter() {
           <Route path="/configuracoes" element={<ConfiguracoesPage />} />
         </Route>
 
-        {/* Catch-all */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
