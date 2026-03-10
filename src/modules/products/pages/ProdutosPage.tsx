@@ -1,13 +1,15 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Package } from "lucide-react";
+import { Plus, Package, AlertCircle } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { SectionCard } from "@/components/shared/SectionCard";
 import { EmptyState } from "@/components/shared/EmptyState";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ProductFilters } from "../components/ProductFilters";
 import { ProductTable } from "../components/ProductTable";
-import { mockProducts } from "../data/mockProducts";
+import { productService } from "../services/productService";
 
 export default function ProdutosPage() {
   const navigate = useNavigate();
@@ -16,8 +18,13 @@ export default function ProdutosPage() {
   const [status, setStatus] = useState("all");
   const [unit, setUnit] = useState("all");
 
+  const { data: products = [], isLoading, isError } = useQuery({
+    queryKey: ["products"],
+    queryFn: () => productService.list(),
+  });
+
   const filtered = useMemo(() => {
-    return mockProducts.filter((p) => {
+    return products.filter((p) => {
       const q = search.toLowerCase();
       const matchesSearch = !q || p.code.toLowerCase().includes(q) || p.barcode.includes(q) || p.description.toLowerCase().includes(q);
       const matchesCategory = category === "all" || p.category === category;
@@ -25,7 +32,7 @@ export default function ProdutosPage() {
       const matchesUnit = unit === "all" || p.unit === unit;
       return matchesSearch && matchesCategory && matchesStatus && matchesUnit;
     });
-  }, [search, category, status, unit]);
+  }, [products, search, category, status, unit]);
 
   return (
     <div className="space-y-6">
@@ -47,7 +54,20 @@ export default function ProdutosPage() {
             status={status} onStatusChange={setStatus}
             unit={unit} onUnitChange={setUnit}
           />
-          {filtered.length > 0 ? (
+
+          {isLoading ? (
+            <div className="space-y-3">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Skeleton key={i} className="h-12 w-full" />
+              ))}
+            </div>
+          ) : isError ? (
+            <EmptyState
+              icon={AlertCircle}
+              title="Erro ao carregar produtos"
+              description="Não foi possível carregar a lista de produtos. Tente novamente mais tarde."
+            />
+          ) : filtered.length > 0 ? (
             <>
               <ProductTable products={filtered} />
               <div className="flex items-center justify-between pt-2 text-xs text-muted-foreground">
