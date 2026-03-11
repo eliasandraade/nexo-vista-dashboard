@@ -13,6 +13,8 @@ import { InventoryTable } from "../components/InventoryTable";
 import { InventoryAlertCard } from "../components/InventoryAlertCard";
 import { inventoryService } from "../services/inventoryService";
 
+const STALE_DAYS = 14;
+
 export default function EstoquePage() {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
@@ -42,7 +44,11 @@ export default function EstoquePage() {
   }, [items, search, category, status, unit]);
 
   const belowMin = items.filter((i) => i.status === "low" || i.status === "zero").length;
-  const zeroStock = items.filter((i) => i.status === "zero").length;
+
+  const noTurnover = useMemo(() => {
+    const cutoff = Date.now() - STALE_DAYS * 24 * 60 * 60 * 1000;
+    return items.filter((i) => new Date(i.lastMovement).getTime() < cutoff).length;
+  }, [items]);
 
   return (
     <div className="space-y-6">
@@ -64,7 +70,7 @@ export default function EstoquePage() {
       <InventoryKpiCards
         totalProducts={items.length}
         belowMin={belowMin}
-        noTurnover={zeroStock}
+        noTurnover={noTurnover}
         movementsToday={3}
       />
 

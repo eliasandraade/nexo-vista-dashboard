@@ -70,3 +70,8 @@ export interface InventoryTransferInput {
   reason: string;
   notes: string;
 }
+
+export interface ProductOption {
+  id: string;
+  label: string;
+}
