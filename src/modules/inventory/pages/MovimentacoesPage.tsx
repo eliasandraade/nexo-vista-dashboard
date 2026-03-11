@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
-import { ArrowLeft, AlertCircle, History } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { ArrowLeft, AlertCircle, History, Search } from "lucide-react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,26 +11,38 @@ import { EmptyState } from "@/components/shared/EmptyState";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MovementTable } from "../components/MovementTable";
 import { inventoryService } from "../services/inventoryService";
-import { Search } from "lucide-react";
+
+const uniqueValues = (arr: string[]) => Array.from(new Set(arr)).sort();
 
 export default function MovimentacoesPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const preselectedProduct = searchParams.get("productId") ?? "";
+
   const [search, setSearch] = useState("");
   const [type, setType] = useState("all");
+  const [store, setStore] = useState("all");
+  const [user, setUser] = useState("all");
 
   const { data: movements = [], isLoading, isError } = useQuery({
     queryKey: ["inventory-movements"],
     queryFn: () => inventoryService.listMovements(),
   });
 
+  const stores = useMemo(() => uniqueValues(movements.flatMap((m) => [m.origin, m.destination].filter((v) => v !== "—"))), [movements]);
+  const users = useMemo(() => uniqueValues(movements.map((m) => m.user)), [movements]);
+
   const filtered = useMemo(() => {
     return movements.filter((m) => {
       const q = search.toLowerCase();
       const matchSearch = !q || m.productDescription.toLowerCase().includes(q) || m.user.toLowerCase().includes(q);
       const matchType = type === "all" || m.type === type;
-      return matchSearch && matchType;
+      const matchStore = store === "all" || m.origin === store || m.destination === store;
+      const matchUser = user === "all" || m.user === user;
+      const matchProduct = !preselectedProduct || m.productId === preselectedProduct;
+      return matchSearch && matchType && matchStore && matchUser && matchProduct;
     });
-  }, [movements, search, type]);
+  }, [movements, search, type, store, user, preselectedProduct]);
 
   return (
     <div className="space-y-6">
@@ -59,6 +71,20 @@ export default function MovimentacoesPage() {
                 <SelectItem value="exit">Saída</SelectItem>
                 <SelectItem value="adjustment">Ajuste</SelectItem>
                 <SelectItem value="transfer">Transferência</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={store} onValueChange={setStore}>
+              <SelectTrigger className="w-[180px]"><SelectValue placeholder="Loja" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todas as lojas</SelectItem>
+                {stores.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+              </SelectContent>
+            </Select>
+            <Select value={user} onValueChange={setUser}>
+              <SelectTrigger className="w-[180px]"><SelectValue placeholder="Usuário" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todos os usuários</SelectItem>
+                {users.map((u) => <SelectItem key={u} value={u}>{u}</SelectItem>)}
               </SelectContent>
             </Select>
           </div>

@@ -71,13 +71,13 @@ export function InventoryTable({ items }: InventoryTableProps) {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => navigate("/estoque/movimentacoes")}>
+                  <DropdownMenuItem onClick={() => navigate(`/estoque/movimentacoes?productId=${item.productId}`)}>
                     <History className="h-4 w-4 mr-2" /> Ver movimentações
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => navigate("/estoque/ajustes")}>
+                  <DropdownMenuItem onClick={() => navigate(`/estoque/ajustes?productId=${item.productId}`)}>
                     <Pencil className="h-4 w-4 mr-2" /> Ajustar
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => navigate("/estoque/transferencias")}>
+                  <DropdownMenuItem onClick={() => navigate(`/estoque/transferencias?productId=${item.productId}`)}>
                     <ArrowRightLeft className="h-4 w-4 mr-2" /> Transferir
                   </DropdownMenuItem>
                 </DropdownMenuContent>
