@@ -8,6 +8,9 @@ import OrcamentosPage from "@/modules/sales/pages/OrcamentosPage";
 import ProdutosPage from "@/modules/products/pages/ProdutosPage";
 import ProductFormPage from "@/modules/products/pages/ProductFormPage";
 import EstoquePage from "@/modules/inventory/pages/EstoquePage";
+import MovimentacoesPage from "@/modules/inventory/pages/MovimentacoesPage";
+import AjustesPage from "@/modules/inventory/pages/AjustesPage";
+import TransferenciasPage from "@/modules/inventory/pages/TransferenciasPage";
 import ClientesPage from "@/modules/customers/pages/ClientesPage";
 import FornecedoresPage from "@/modules/suppliers/pages/FornecedoresPage";
 import UsuariosPage from "@/modules/users/pages/UsuariosPage";
@@ -33,6 +36,9 @@ export function AppRouter() {
           <Route path="/produtos/novo" element={<ProductFormPage />} />
           <Route path="/produtos/:id" element={<ProductFormPage />} />
           <Route path="/estoque" element={<EstoquePage />} />
+          <Route path="/estoque/movimentacoes" element={<MovimentacoesPage />} />
+          <Route path="/estoque/ajustes" element={<AjustesPage />} />
+          <Route path="/estoque/transferencias" element={<TransferenciasPage />} />
           <Route path="/clientes" element={<ClientesPage />} />
           <Route path="/fornecedores" element={<FornecedoresPage />} />
           <Route path="/usuarios" element={<UsuariosPage />} />
