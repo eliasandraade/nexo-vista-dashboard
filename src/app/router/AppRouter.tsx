@@ -14,6 +14,8 @@ import TransferenciasPage from "@/modules/inventory/pages/TransferenciasPage";
 import ClientesPage from "@/modules/customers/pages/ClientesPage";
 import FornecedoresPage from "@/modules/suppliers/pages/FornecedoresPage";
 import UsuariosPage from "@/modules/users/pages/UsuariosPage";
+import UserFormPage from "@/modules/users/pages/UserFormPage";
+import PermissoesPage from "@/modules/users/pages/PermissoesPage";
 import ComissoesPage from "@/modules/commissions/pages/ComissoesPage";
 import CaixaPage from "@/modules/cash/pages/CaixaPage";
 import RelatoriosPage from "@/modules/reports/pages/RelatoriosPage";
@@ -42,6 +44,9 @@ export function AppRouter() {
           <Route path="/clientes" element={<ClientesPage />} />
           <Route path="/fornecedores" element={<FornecedoresPage />} />
           <Route path="/usuarios" element={<UsuariosPage />} />
+          <Route path="/usuarios/novo" element={<UserFormPage />} />
+          <Route path="/usuarios/:id" element={<UserFormPage />} />
+          <Route path="/usuarios/permissoes" element={<PermissoesPage />} />
           <Route path="/comissoes" element={<ComissoesPage />} />
           <Route path="/caixa" element={<CaixaPage />} />
           <Route path="/relatorios" element={<RelatoriosPage />} />
