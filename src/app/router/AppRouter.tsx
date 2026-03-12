@@ -12,6 +12,7 @@ import MovimentacoesPage from "@/modules/inventory/pages/MovimentacoesPage";
 import AjustesPage from "@/modules/inventory/pages/AjustesPage";
 import TransferenciasPage from "@/modules/inventory/pages/TransferenciasPage";
 import ClientesPage from "@/modules/customers/pages/ClientesPage";
+import CustomerFormPage from "@/modules/customers/pages/CustomerFormPage";
 import FornecedoresPage from "@/modules/suppliers/pages/FornecedoresPage";
 import UsuariosPage from "@/modules/users/pages/UsuariosPage";
 import UserFormPage from "@/modules/users/pages/UserFormPage";
