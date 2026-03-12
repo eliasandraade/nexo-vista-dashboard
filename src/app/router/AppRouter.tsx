@@ -12,6 +12,7 @@ import MovimentacoesPage from "@/modules/inventory/pages/MovimentacoesPage";
 import AjustesPage from "@/modules/inventory/pages/AjustesPage";
 import TransferenciasPage from "@/modules/inventory/pages/TransferenciasPage";
 import ClientesPage from "@/modules/customers/pages/ClientesPage";
+import CustomerFormPage from "@/modules/customers/pages/CustomerFormPage";
 import FornecedoresPage from "@/modules/suppliers/pages/FornecedoresPage";
 import UsuariosPage from "@/modules/users/pages/UsuariosPage";
 import UserFormPage from "@/modules/users/pages/UserFormPage";
@@ -42,6 +43,8 @@ export function AppRouter() {
           <Route path="/estoque/ajustes" element={<AjustesPage />} />
           <Route path="/estoque/transferencias" element={<TransferenciasPage />} />
           <Route path="/clientes" element={<ClientesPage />} />
+          <Route path="/clientes/novo" element={<CustomerFormPage />} />
+          <Route path="/clientes/:id" element={<CustomerFormPage />} />
           <Route path="/fornecedores" element={<FornecedoresPage />} />
           <Route path="/usuarios" element={<UsuariosPage />} />
           <Route path="/usuarios/novo" element={<UserFormPage />} />
