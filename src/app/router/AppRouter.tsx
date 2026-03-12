@@ -43,6 +43,8 @@ export function AppRouter() {
           <Route path="/estoque/ajustes" element={<AjustesPage />} />
           <Route path="/estoque/transferencias" element={<TransferenciasPage />} />
           <Route path="/clientes" element={<ClientesPage />} />
+          <Route path="/clientes/novo" element={<CustomerFormPage />} />
+          <Route path="/clientes/:id" element={<CustomerFormPage />} />
           <Route path="/fornecedores" element={<FornecedoresPage />} />
           <Route path="/usuarios" element={<UsuariosPage />} />
           <Route path="/usuarios/novo" element={<UserFormPage />} />
